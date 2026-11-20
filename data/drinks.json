@@ -1,0 +1,145 @@
+{
+  "note": "Caffeine per serving = USDA FoodData Central SR Legacy caffeine (mg per 100 g) x the gram weight of the serving. Gram weights come from the same FDC record where it lists one; otherwise 29.6 g per fl oz (the FDC weight for brewed coffee and tea). Retrieved Nov 20, 2026 from api.nal.usda.gov/fdc/v1.",
+  "drinks": [
+    {
+      "id": "drip8",
+      "name": "Drip coffee",
+      "size": "8 oz",
+      "mg": 95,
+      "fdc": 171890,
+      "per100g": 40,
+      "grams": 237,
+      "how": "1 cup (8 fl oz) = 237 g"
+    },
+    {
+      "id": "drip12",
+      "name": "Drip coffee",
+      "size": "12 oz",
+      "mg": 142,
+      "fdc": 171890,
+      "per100g": 40,
+      "grams": 355.2,
+      "how": "12 x 29.6 g per fl oz"
+    },
+    {
+      "id": "drip16",
+      "name": "Drip coffee",
+      "size": "16 oz",
+      "mg": 189,
+      "fdc": 171890,
+      "per100g": 40,
+      "grams": 473.6,
+      "how": "16 x 29.6 g per fl oz"
+    },
+    {
+      "id": "esp1",
+      "name": "Espresso",
+      "size": "single shot",
+      "mg": 63,
+      "fdc": 171891,
+      "per100g": 212,
+      "grams": 29.6,
+      "how": "1 fl oz = 29.6 g"
+    },
+    {
+      "id": "esp2",
+      "name": "Latte or cappuccino",
+      "size": "two shots",
+      "mg": 126,
+      "fdc": 171891,
+      "per100g": 212,
+      "grams": 59.2,
+      "how": "2 shots x 29.6 g; milk adds none"
+    },
+    {
+      "id": "decaf8",
+      "name": "Decaf coffee",
+      "size": "8 oz",
+      "mg": 2,
+      "fdc": 171889,
+      "per100g": 1,
+      "grams": 237,
+      "how": "1 cup (8 fl oz) = 237 g"
+    },
+    {
+      "id": "prewk",
+      "name": "Pre-workout",
+      "size": "one scoop",
+      "mg": 217.5,
+      "fdc": null,
+      "per100g": null,
+      "grams": null,
+      "how": "the standard serve used by Gardiner et al. (2023)"
+    },
+    {
+      "id": "black8",
+      "name": "Black tea",
+      "size": "8 oz",
+      "mg": 47,
+      "fdc": 173227,
+      "per100g": 20,
+      "grams": 237,
+      "how": "1 cup (8 fl oz) = 237 g"
+    },
+    {
+      "id": "oolong8",
+      "name": "Oolong tea",
+      "size": "8 oz",
+      "mg": 38,
+      "fdc": 174120,
+      "per100g": 16,
+      "grams": 236.8,
+      "how": "8 x 29.6 g per fl oz"
+    },
+    {
+      "id": "green8",
+      "name": "Green tea",
+      "size": "1 cup",
+      "mg": 29,
+      "fdc": 171917,
+      "per100g": 12,
+      "grams": 245,
+      "how": "1 cup = 245 g"
+    },
+    {
+      "id": "cola12",
+      "name": "Cola",
+      "size": "12 oz can",
+      "mg": 33,
+      "fdc": 174852,
+      "per100g": 9,
+      "grams": 370,
+      "how": "1 can (12 fl oz) = 370 g"
+    },
+    {
+      "id": "rb84",
+      "name": "Red Bull",
+      "size": "8.4 oz can",
+      "mg": 75,
+      "fdc": 173210,
+      "per100g": 29,
+      "grams": 258,
+      "how": "1 can (8.4 fl oz) = 258 g"
+    },
+    {
+      "id": "rock16",
+      "name": "Rockstar",
+      "size": "16 oz can",
+      "mg": 158,
+      "fdc": 171937,
+      "per100g": 33,
+      "grams": 480,
+      "how": "1 can = 480 g"
+    },
+    {
+      "id": "choc1",
+      "name": "Dark chocolate",
+      "size": "1 oz, 70 to 85%",
+      "mg": 23,
+      "fdc": 170273,
+      "per100g": 80,
+      "grams": 28.35,
+      "how": "1 oz = 28.35 g"
+    }
+  ]
+}

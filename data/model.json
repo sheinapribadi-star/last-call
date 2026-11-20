@@ -1,0 +1,29 @@
+{
+  "half_life_h": 4.3,
+  "line_mg": 26.9,
+  "check_preworkout_mg": 26.9,
+  "tmax_h": 0.79,
+  "tea_peak_mg": 41.4,
+  "sensitivity": {
+    "3.5": {
+      "coffee_8.8h": 19.7,
+      "preworkout_13.2h": 16.8
+    },
+    "4.0": {
+      "coffee_8.8h": 24.3,
+      "preworkout_13.2h": 23.0
+    },
+    "4.5": {
+      "coffee_8.8h": 28.6,
+      "preworkout_13.2h": 29.5
+    },
+    "5.0": {
+      "coffee_8.8h": 32.6,
+      "preworkout_13.2h": 36.0
+    },
+    "6.0": {
+      "coffee_8.8h": 39.7,
+      "preworkout_13.2h": 48.5
+    }
+  }
+}

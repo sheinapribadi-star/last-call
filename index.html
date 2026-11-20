@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Last Call &middot; when to have your last coffee tonight</title>
+  <meta name="description" content="A caffeine clock built on a 2023 meta-analysis of 24 sleep studies. Set your bedtime and see tonight's last call for every drink on the menu." />
+  <meta name="theme-color" content="#f3ede2" />
+  <meta property="og:title" content="Last Call" />
+  <meta property="og:description" content="Tonight's last call for every drink on the menu, from a 2023 meta-analysis of 24 sleep studies." />
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,800&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&family=Barlow+Condensed:wght@500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="mast">
+    <div class="wrap mast__in">
+      <p class="mast__kicker">A caffeine clock &middot; built on 24 sleep studies</p>
+      <h1 class="mast__title">Last Call</h1>
+      <p class="mast__lede">&ldquo;No coffee after 2&rdquo; ignores what you drank, how much, and when you actually go to bed. Tell me your bedtime and I&rsquo;ll tell you the latest you can have each drink and still sleep with less caffeine in you than a can of cola.</p>
+    </div>
+  </header>
+
+  <main>
+    <section class="wrap setup" aria-labelledby="setup-title">
+      <h2 id="setup-title" class="sr">Your night</h2>
+      <div class="setup__field">
+        <label for="bed" class="lbl">Lights out</label>
+        <div class="bed">
+          <button type="button" class="nudge" data-nudge="-15" aria-label="Fifteen minutes earlier">&minus;</button>
+          <input id="bed" type="time" value="23:00" step="900" />
+          <button type="button" class="nudge" data-nudge="15" aria-label="Fifteen minutes later">+</button>
+        </div>
+        <p class="hint" id="wake-hint">Up around 7:00 AM</p>
+      </div>
+      <fieldset class="setup__field meta">
+        <legend class="lbl">How fast you clear caffeine</legend>
+        <div class="seg" role="radiogroup">
+          <label><input type="radio" name="speed" value="3.5" /><span><b>Faster</b><small>3.5 h half-life, typical of smokers<sup><a href="#s5">5</a></sup></small></span></label>
+          <label><input type="radio" name="speed" value="4.3" checked /><span><b>Average</b><small>4.3 h, fit to the meta-analysis<sup><a href="#s1">1</a></sup></small></span></label>
+          <label><input type="radio" name="speed" value="7.9" /><span><b>Slower</b><small>7.9 h, on estrogen birth control<sup><a href="#s4">4</a></sup></small></span></label>
+        </div>
+        <div class="fine">
+          <label for="half" class="hint">Fine-tune</label>
+          <input id="half" type="range" min="2" max="9.5" step="0.1" value="4.3" />
+          <output id="half-out" for="half">4.3 h</output>
+        </div>
+      </fieldset>
+    </section>
+
+    <section class="wrap board-wrap" aria-labelledby="board-title">
+      <div class="board">
+        <div class="board__head">
+          <h2 id="board-title" class="board__title">Tonight&rsquo;s last calls</h2>
+          <p class="board__sub" id="board-sub">for lights out at 11:00 PM, on an otherwise caffeine-free day</p>
+        </div>
+        <ol class="board__list" id="board-list"></ol>
+        <p class="board__foot">Caffeine per serving from USDA FoodData Central<sup><a href="#s6">6</a></sup>. &ldquo;Any time&rdquo; means even a nightcap never crosses the line. A struck-out time has already passed today.</p>
+      </div>
+    </section>
+
+    <section class="wrap day" aria-labelledby="day-title">
+      <div class="day__grid">
+        <div class="ticket">
+          <div class="ticket__head">
+            <h2 id="day-title" class="ticket__title">Your day so far</h2>
+            <p class="ticket__no">Ticket <span id="tk-date"></span></p>
+          </div>
+          <ol class="ledger" id="ledger" aria-label="Drinks you had today"></ol>
+          <div class="ticket__actions">
+            <button type="button" class="btn" id="add">Add a drink</button>
+            <button type="button" class="btn btn--quiet" id="clear">Clear ticket</button>
+          </div>
+          <dl class="ticket__sum">
+            <div><dt>Today&rsquo;s total</dt><dd id="sum-total">0 mg</dd></div>
+            <div><dt>FDA&rsquo;s daily reference<sup><a href="#s7">7</a></sup></dt><dd>400 mg</dd></div>
+          </dl>
+        </div>
+
+        <div class="readout" aria-live="polite">
+          <p class="readout__label">At lights out you&rsquo;ll still carry</p>
+          <p class="readout__big"><span id="ro-mg">0</span><span class="unit">mg</span></p>
+          <p class="readout__verdict" id="ro-verdict"></p>
+          <div class="stamp" id="stamp">
+            <p class="stamp__top">Last call for one more</p>
+            <label class="sr" for="next">Drink</label>
+            <select id="next" class="stamp__pick"></select>
+            <p class="stamp__time" id="stamp-time">1:12 PM</p>
+          </div>
+          <p class="readout__fix" id="ro-fix"></p>
+        </div>
+      </div>
+
+      <figure class="chart">
+        <svg id="chart" viewBox="0 0 760 280" role="img" aria-labelledby="chart-cap"></svg>
+        <figcaption id="chart-cap">Caffeine on board through the day and night. The dashed line is 27 mg; the shaded band is the night you&rsquo;re trying to protect.</figcaption>
+      </figure>
+    </section>
+
+    <section class="wrap method" aria-labelledby="method-title">
+      <h2 id="method-title" class="h2">How the line was drawn</h2>
+      <div class="method__cols">
+        <div>
+          <p>In 2023, Carissa Gardiner and colleagues pooled 24 studies of caffeine and sleep<sup><a href="#s1">1</a></sup>. On average caffeine cost <b>45 minutes</b> of sleep, added 9 minutes to falling asleep and cut deep sleep by 11 minutes. Their meta-regression named a cut-off for two drinks: a cup of coffee (107 mg) at least <b>8.8 hours</b> before bed and a pre-workout scoop (217.5 mg) at least <b>13.2 hours</b> before bed.</p>
+          <p>Two cut-offs are not a rule you can use for a 16 oz drip and a 4 PM cola. So I asked a simpler question: is there one amount left in your body at lights out that both cut-offs agree on?</p>
+          <p>There is. Caffeine peaks in your blood within an hour or two, then your liver clears a constant share of it every hour<sup><a href="#s3">3</a></sup>. If it halves every <b>4.3 hours</b>, the coffee and the pre-workout both leave <b>27 mg</b> on board at bedtime. 4.3 hours sits inside the published adult range and a little under the 5 hour average. That 27 mg is the line, and the app keeps you under it from lights out until morning, however many drinks you stack.</p>
+        </div>
+        <div>
+          <table class="check" aria-describedby="check-note">
+            <caption>Self-check against the paper</caption>
+            <thead><tr><th scope="col">Drink</th><th scope="col">The paper</th><th scope="col">This app</th></tr></thead>
+            <tbody id="check-body"></tbody>
+          </table>
+          <p class="note" id="check-note">Computed live at the average 4.3 h half-life. The one disagreement is black tea: the paper only names a cut-off once the 95% confidence interval for lost sleep clears zero, which a small dose may never do. I kept the stricter reading.</p>
+          <p class="note">Drake and colleagues saw the same thing in the lab: 400 mg taken six hours before bed still took more than an hour off objectively measured sleep<sup><a href="#s2">2</a></sup>.</p>
+        </div>
+      </div>
+      <p class="caveat"><b>What this is not.</b> Not medical advice, and not a dose limit. It ignores body weight, genetics and tolerance, and pregnancy slows clearance far more than the slider allows. If you&rsquo;re pregnant or on medication that interacts with caffeine, ask your clinician.</p>
+    </section>
+
+    <section class="wrap sources" aria-labelledby="src-title">
+      <h2 id="src-title" class="h2">Sources</h2>
+      <ol class="src">
+        <li id="s1">Gardiner C, Weakley J, Burke LM, et al. The effect of caffeine on subsequent sleep: a systematic review and meta-analysis. <i>Sleep Medicine Reviews</i> 69 (2023) 101764. <a href="https://doi.org/10.1016/j.smrv.2023.101764">doi.org/10.1016/j.smrv.2023.101764</a></li>
+        <li id="s2">Drake C, Roehrs T, Shambroom J, Roth T. Caffeine effects on sleep taken 0, 3, or 6 hours before going to bed. <i>J Clin Sleep Med</i> 9(11) (2013) 1195-1200. <a href="https://doi.org/10.5664/jcsm.3170">doi.org/10.5664/jcsm.3170</a></li>
+        <li id="s3">Institute of Medicine. <i>Caffeine for the Sustainment of Mental Task Performance</i>, ch. 2, Pharmacology of Caffeine (2001). Mean half-life about 5 h, range 1.5 to 9.5 h; one-compartment, first-order kinetics. <a href="https://www.ncbi.nlm.nih.gov/books/NBK223808/">ncbi.nlm.nih.gov/books/NBK223808</a></li>
+        <li id="s4">Abernethy DR, Todd EL. Impairment of caffeine clearance by chronic use of low-dose oestrogen-containing oral contraceptives. <i>Eur J Clin Pharmacol</i> 28 (1985) 425-428. Half-life 7.88 h vs 5.37 h; time to peak 0.79 h in controls. <a href="https://doi.org/10.1007/BF00544361">doi.org/10.1007/BF00544361</a></li>
+        <li id="s5">Parsons WD, Neims AH. Effect of smoking on caffeine clearance. <i>Clin Pharmacol Ther</i> 24 (1978) 40-45. Half-life 3.5 h in smokers vs 6.0 h in nonsmokers. <a href="https://doi.org/10.1002/cpt197824140">doi.org/10.1002/cpt197824140</a></li>
+        <li id="s6">USDA FoodData Central, SR Legacy records 171890, 171891, 173227, 174120, 171917, 174852, 173210, 171937, 170273 and 171889 (caffeine per 100 g and serving weights). <a href="https://fdc.nal.usda.gov/">fdc.nal.usda.gov</a></li>
+        <li id="s7">U.S. Food and Drug Administration. Spilling the Beans: How Much Caffeine is Too Much? <a href="https://www.fda.gov/consumers/consumer-updates/spilling-beans-how-much-caffeine-too-much">fda.gov</a></li>
+      </ol>
+    </section>
+  </main>
+
+  <footer class="foot">
+    <div class="wrap foot__in">
+      <p>Made by <a href="https://sheinapribadi-star.github.io/">Sheina Pribadi</a> &middot; <a href="https://github.com/sheinapribadi-star/last-call">code and method</a></p>
+      <p>Your ticket stays in this browser. Nothing is sent anywhere.</p>
+    </div>
+  </footer>
+
+  <template id="row-tpl">
+    <li class="ledger__row">
+      <span class="ledger__no"></span>
+      <input class="ledger__time" type="time" step="300" aria-label="Time" />
+      <select class="ledger__drink" aria-label="Drink"></select>
+      <span class="ledger__mg"><input type="number" min="0" max="1000" step="1" aria-label="Milligrams of caffeine" /><span>mg</span></span>
+      <button type="button" class="ledger__x" aria-label="Remove this drink">&times;</button>
+    </li>
+  </template>
+
+  <script src="app.js" type="module"></script>
+</body>
+</html>
